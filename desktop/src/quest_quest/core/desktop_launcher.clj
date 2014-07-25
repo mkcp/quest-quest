@@ -6,5 +6,5 @@
 
 (defn -main
   []
-  (LwjglApplication. quest-quest "quest-quest" 800 600)
+  (LwjglApplication. quest-quest "quest-quest" 1600 900)
   (Keyboard/enableRepeatEvents true))
