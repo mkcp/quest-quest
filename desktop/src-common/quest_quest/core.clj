@@ -31,6 +31,13 @@
                2
                3))))
 
+(defn update-world
+  [screen entities]
+  (->> entities
+       (e/move screen)
+       (e/prevent-move screen)
+       (e/animate screen)))
+
 (defscreen main-screen
   :on-show
   (fn [screen entities]
@@ -41,6 +48,11 @@
                       :level 1
                       :x 180
                       :y 20})
+
+    #_(e/create-enemy {:image (texture "enemy.png")
+                       :level 1
+                       :x 150
+                       :y 5})
     )
 
   :on-render
@@ -49,10 +61,7 @@
 
 
     (->> entities
-         (map #(->> %
-                    (e/move screen)
-                    (e/prevent-move screen)
-                    (e/animate screen)))
+         (map #(update-world screen %))
 
          #_(run! ui-screen :on-update-ui :entities)
 
@@ -72,7 +81,7 @@
 
     (let [quest (first quests) ; UI screen should get passed a player.
 
-          quest-table (table [:row [(assoc (label (:title quest)
+          quest-table (table [:row [(assoc (label (str "Quest: " (:title quest))
                                                   (color :white))
                                            :id :quest-title)]
 
@@ -80,8 +89,7 @@
                                                   (color :white))
                                            :id :quest-body)]]
 
-                             :align (align :top)
-                             )
+                             :set-position 800 800)
 
           fps (assoc (label "0" (color :white))
                      :id :fps
@@ -103,7 +111,7 @@
 
   ;:on-update-ui
   ;(fn [screen entities]
-    ; FIXME Update UI with player HP MP and level
+    ; FIXME Update UI with player HP and level every render
     ; FIXME Update quest using player level to set current quest
   ;  )
   )
