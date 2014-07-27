@@ -1,6 +1,5 @@
 (ns quest-quest.core
-  (:require [quest-quest.camera :as c]
-            [quest-quest.entities :as e]
+  (:require [quest-quest.entities :as e]
             [quest-quest.utils :as u]
             [quest-quest.quests :refer :all]
             [play-clj.core :refer :all]
@@ -13,12 +12,20 @@
   []
   (set-screen! quest-quest main-screen ui-screen))
 
+(defn camera-to-middle!
+  [screen x y]
+  (if (> y 0) (position! screen x (/ u/vertical-tiles 2))))
+
+(defn camera-to-point!
+  [screen x y]
+  (position! screen x y))
+
 (defn update-screen!
   "Used in the render function to focus the camera on the player and reset the screen if the player goes out of bounds."
   [screen entities]
   (doseq [{:keys [x y height id to-destroy]} entities]
     (case id
-      :player (do (c/move-to-middle! screen x y)
+      :player (do (camera-to-middle! screen x y)
                   (when (u/out-of-bounds? y height)
                     (reset-screen!)))))
   entities)
