@@ -8,3 +8,9 @@
   []
   (LwjglApplication. quest-quest "quest-quest" 1600 900)
   (Keyboard/enableRepeatEvents true))
+
+
+;; Repl helpers
+(defn start! []
+  (-main)
+  (in-ns 'quest-quest.core))

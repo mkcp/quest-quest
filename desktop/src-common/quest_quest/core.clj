@@ -18,10 +18,18 @@
   [screen entities]
   (doseq [{:keys [x y height id to-destroy]} entities]
     (case id
-      :player (do (c/move-to-point! screen x y)
+      :player (do (c/move-to-middle! screen x y)
                   (when (u/out-of-bounds? y height)
                     (reset-screen!)))))
   entities)
+
+(defn check-level []
+  (comment (let [level (:level player)]
+             (case (:level player)
+               0 (let [quest (level quest)])
+               1
+               2
+               3))))
 
 (defscreen main-screen
   :on-show
@@ -32,36 +40,25 @@
     (e/create-player {:image (texture "player.png")
                       :level 1
                       :x 180
-                      :y 20}))
+                      :y 20})
+    )
 
   :on-render
   (fn [screen entities]
     (clear! (/ 135 255) (/ 206 255) (/ 235 255) 1)
 
-    (comment (case (:level player)
-               0 (starting)
-               1
-               2
-               3
-               4
-               5
-               6
-               7
-               8
-               9
-               10 ))
 
     (->> entities
          (map #(->> %
                     (e/move screen)
                     (e/prevent-move screen)
-                    #_(e/animate screen) ; FIXME Need to flip between the two textures stored on the entity.
-                    ))
-         (render! screen)
-         (update-screen! screen)
+                    (e/animate screen)))
 
-         ; FIXME Pass ui-screen the player
-         #_(run! ui-screen :on-update-ui :entities)))
+         #_(run! ui-screen :on-update-ui :entities)
+
+         ;; Apply the transformations to the screen
+         (render! screen)
+         (update-screen! screen) ))
 
   :on-resize
   (fn [{:keys [width height] :as screen} entities]

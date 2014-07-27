@@ -6,8 +6,8 @@
 (defn create-player
   [{:keys [level image x y]}]
   (assoc image
-         :right image
-         :left (texture image :flip true false)
+         :right (texture image :flip true false)
+         :left image
          :width 1
          :height (/ 26 18)
          :x-velocity 0
@@ -15,8 +15,8 @@
          :level level
          :x x
          :y y
-         :health 10
-         :mana 10
+         :health (* 10 level)
+         :mana (* 10 level)
          :id :player
          :can-jump? false
          :direction :left))
@@ -63,3 +63,11 @@
            (when-let [tile (u/get-touching-tile screen entity-y "walls")]
              {:y-velocity 0 :y-change 0 :y old-y
               :can-jump? (not up?) :to-destroy (when up? tile)}))))
+
+(defn animate
+  [screen {:keys [x-velocity y-velocity
+                  right left] :as entity}]
+  (let [direction (u/get-direction entity)]
+    (merge entity
+           (if (= direction :right) right left)
+           {:direction direction})))
