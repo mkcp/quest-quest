@@ -1,7 +1,11 @@
 (ns quest-quest.quests)
 
 (def quests
-  [{:title "Safety First"
+  [{:title "Quest Quest"
+    :body "Welcome to Quest Quest!"
+    :reward "Falling Unlocked!"}
+
+   {:title "Safety First"
     :body "The ground is fast approaching, you must land safely!"
     :reward "Move Right Unlocked!"}
 
