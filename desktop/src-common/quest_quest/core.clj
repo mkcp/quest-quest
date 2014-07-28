@@ -29,9 +29,9 @@
 
 (defn move-camera!
   [screen x y]
-  (if (> 8 y)
+  (if (> u/camera-height y)
     (if (> y 0)
-      (position! screen x (/ u/vertical-tiles 2)))
+      (position! screen x u/camera-height))
     (position! screen x y)))
 
 (defn update-screen!
