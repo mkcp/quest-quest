@@ -9,7 +9,7 @@
          :right (texture image :flip true false)
          :left image
          :width 1
-         :height (/ 26 18)
+         :height (/ 32 18)
          :x-velocity 0
          :y-velocity 0
          :level level
@@ -21,12 +21,20 @@
          :can-jump? false
          :direction :left))
 
-#_(defn create-enemy
-  [image level {:keys [level image x y]}]
+(defn create-enemy
+  [{:keys [image level x y id]}]
   (assoc image
          :x x
          :y y
-         :level level))
+         :x-velocity 0
+         :y-velocity 0
+         :width 32
+         :height 32
+         :id :enemy-first ; FIXME
+         :can-jump false ; FIXME
+         :direction :right
+         :level level
+         :health (* 10 level)))
 
 (defn move
   "Calculates the change in x and y by multiplying velocity by time.
@@ -49,7 +57,7 @@
       entity)))
 
 ; FIXME Understand how collision is based on touching and deactivating 
-; FIXME Remove every reference to :to-destroy.
+; FIXME Remove call to :to-destroy, surprised that destroying blocks is a part of prevent-move
 (defn prevent-move
   [screen {:keys [x y x-change y-change] :as entity}]
   (let [old-x (- x x-change)
