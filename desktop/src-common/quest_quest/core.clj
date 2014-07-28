@@ -1,6 +1,7 @@
 (ns quest-quest.core
   (:require [quest-quest.entities :as e]
             [quest-quest.utils :as u]
+            [quest-quest.ui :as ui]
             [quest-quest.quests :refer :all]
             [play-clj.core :refer :all]
             [play-clj.ui :refer :all]
@@ -8,37 +9,35 @@
 
 (declare quest-quest main-screen npc-health-screen ui-screen reset-screen!)
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Live coding helpers ;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defn reload!
+  "Repl helper"
   []
   (use 'quest-quest.core
        'quest-quest.entities
+       'quest-quest.ui
        'quest-quest.utils
        'quest-quest.quests
        :reload)
 
   (reset-screen!))
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
 
 (defn reset-screen!
   []
   (on-gl (set-screen! quest-quest main-screen ui-screen)))
 
+
+;; FIXME Wonky conditionals
 (defn move-camera!
   [screen x y]
-  (if (> u/camera-height y)
+  (if (< y 8)
     (if (> y 0)
-      (position! screen x u/camera-height))
+      (position! screen x 8))
     (position! screen x y)))
+
 
 (defn update-screen!
   "Used in the render function to focus the camera on the player and reset the screen if the player goes out of bounds."
   [screen entities]
-
-  ;; FIXME Is doseq required here?
   (doseq [{:keys [x y height id to-destroy]} entities]
     (case id
       :player (do (move-camera! screen x y)
@@ -46,7 +45,8 @@
                     (reset-screen!)))))
   entities)
 
-(defn update-world
+
+(defn- update-world
   [screen entities]
   (->> entities
        (e/move screen)
@@ -81,6 +81,7 @@
     (->> entities
          (map #(update-world screen %))
 
+         ;; FIXME Update the UI every render tick
          #_(run! ui-screen :on-update-ui :entities)
 
          (render! screen)
@@ -91,33 +92,24 @@
     (height! screen u/vertical-tiles)
     nil))
 
+(defn- make-ui-elements
+  []
+  (let [quest (first quests)]
+    [(ui/make-quest-table quest) (ui/make-unit-frames) (ui/make-fps)]))
+
+
 (defscreen ui-screen
   :on-show
   (fn [screen entities]
     (update! screen :camera (orthographic) :renderer (stage))
-
-    (let [quest (first quests)
-
-          quest-table (table [:row [(assoc (label (str "Quest: " (:title quest))
-                                                  (color :white))
-                                           :id :quest-title)]
-
-                              :row [(assoc (label (:body quest)
-                                                  (color :white))
-                                           :id :quest-body)]]
-
-                             :set-position 800 795)
-
-          fps (assoc (label "0" (color :white))
-                     :id :fps
-                     :x 5)]
-      [quest-table fps]))
+    (make-ui-elements))
 
   :on-render
   (fn [screen entities]
     (->> (for [entity entities]
            (case (:id entity)
              :fps (doto entity (label! :set-text (str (game :fps))))
+             ; :unit-frames (doto entity (label! :set-text (str "Unit"))
              entity))
          (render! screen)))
 
