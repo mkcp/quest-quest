@@ -1,4 +1,4 @@
-(defproject quest-quest "0.0.5-SNAPSHOT"
+(defproject quest-quest "0.0.6-SNAPSHOT"
   :description "Quest Quest, a non-game about questing"
 
   :dependencies [[com.badlogicgames.gdx/gdx "1.2.0"]
