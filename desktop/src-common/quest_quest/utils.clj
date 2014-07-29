@@ -6,8 +6,8 @@
 (def camera-height 8)
 (def duration 0.15)
 (def damping 0.5)
-(def max-velocity 16)
-(def max-jump-velocity 30)
+(def max-velocity 10)
+(def max-jump-velocity 24)
 (def gravity -2.5)
 (def deceleration 0.9)
 
