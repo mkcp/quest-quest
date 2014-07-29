@@ -10,13 +10,14 @@
 (declare quest-quest main-screen npc-health-screen ui-screen reset-screen!)
 
 (defn reload!
-  "Repl helper"
+  "repl helper"
   []
-  (use 'quest-quest.core
+  (use
        'quest-quest.entities
        'quest-quest.ui
        'quest-quest.utils
        'quest-quest.quests
+       'quest-quest.core
        :reload)
 
   (reset-screen!))
@@ -26,8 +27,8 @@
   (on-gl (set-screen! quest-quest main-screen ui-screen)))
 
 
-;; FIXME Wonky conditionals
 (defn move-camera!
+  "The camera tracks the player if above 8 or 0. It Centers the camera on the world when player is below 8."
   [screen x y]
   (if (< y 8)
     (if (> y 0)
@@ -42,16 +43,17 @@
     (case id
       :player (do (move-camera! screen x y)
                   (when (u/out-of-bounds? y height)
-                    (reset-screen!)))))
+                    (reset-screen!)))
+      entities))
   entities)
 
 
 (defn- update-world
-  [screen entities]
-  (->> entities
-       (e/move screen)
-       (e/prevent-move screen)
-       (e/animate screen)))
+    [screen entities]
+    (->> entities
+         (e/move screen)
+         (e/prevent-move screen)
+         (e/animate screen)))
 
 (defscreen main-screen
   :on-show
@@ -61,7 +63,7 @@
 
           player (e/create-player {:image (texture "player.png")
                                    :level 1
-                                   :x 175
+                                   :x 178
                                    :y 60})
 
           enemy (e/create-enemy {:image (texture "first-enemy.png")
@@ -72,6 +74,7 @@
 
       (update! screen :camera (orthographic) :renderer world)
 
+      ;; FIXME Add all 3 enemies
       [player]))
 
   :on-render
@@ -80,6 +83,8 @@
 
     (->> entities
          (map #(update-world screen %))
+
+         #_(e/move-player screen)
 
          ;; FIXME Update the UI every render tick
          #_(run! ui-screen :on-update-ui :entities)
@@ -109,7 +114,6 @@
     (->> (for [entity entities]
            (case (:id entity)
              :fps (doto entity (label! :set-text (str (game :fps))))
-             ; :unit-frames (doto entity (label! :set-text (str "Unit"))
              entity))
          (render! screen)))
 

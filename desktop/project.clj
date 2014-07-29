@@ -1,5 +1,5 @@
-(defproject quest-quest "0.0.7-SNAPSHOT"
-  :description "Quest Quest, a non-game about questing"
+(defproject quest-quest "0.0.8"
+  :description "Quest Quest, the easist RPG ever made."
 
   :dependencies [[com.badlogicgames.gdx/gdx "1.2.0"]
                  [com.badlogicgames.gdx/gdx-backend-lwjgl "1.2.0"]

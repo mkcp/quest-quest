@@ -17,6 +17,8 @@
          :set-position 1450 850))
 
 
+;; FIXME Starting information is hardcoded. Need to pull from somewhere 
+;; if I don't want to start at level 1 every time.
 (defn make-unit-frames
   []
   (table [:row [(assoc (label (str "HP: " 10)
