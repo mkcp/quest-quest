@@ -19,28 +19,28 @@
 
    {:title "A Trial By Combat"
     :body "Your first enemy blocks the path! You must defeat it to continue. Apply everything you've learned so far to vanquish this beast!"
+    :reward "Leveling Up Has Made You Stronger!"}
+
+   {:title "Another Trial By Combat"
+    :body "A scarier enemiy blocks your path! Vanquish it to proceed!"
+    :reward "Leveling Up Has Made You Stronger!"}
+
+   {:title "An Elite Leader"
+    :body "An extremely cunning and ferocious stands between you and the nearby village! Fight with all your power to overcome it!"
+    :reward "Pick-up Item Unlocked!"}
+
+   {:title "Johnney Applegatherer"
+    :body "Those villagers look very hungry. Gather all of their apples to keep them from starving to death!"
     :reward "Jump Unlocked!"}
 
    {:title "Launch Over It!"
     :body "Tighten the muscles in your legs to form a spring and launch yourself over the rock."
-    :reward "Pick-up Item Unlocked!"}
+    :reward "Jump-Attack Unlocked!"}
 
-   {:title "Johnney Applegatherer"
-    :body "Those villagers look hungry. Gather all of their apples to keep them from starving to death!"
-    :reward "No reward set"}
-
-   {:title "Filler Quest"
-    :body "This is a filler quest."
-    :reward "No reward set"}
-
-   {:title "Filler Quest"
-    :body "This is a filler quest."
-    :reward "No reward set"}
-
-   {:title "Insert Title Here"
-    :body "Defeat the Epic Raid Boss"
-    :reward "No reward set"}
+   {:title "The Epic Raid Boss"
+    :body "Destroy the final boss to see what lies inside the treasure room!"
+    :reward "Open Treasure Unlocked!"}
 
    {:title "End Game"
     :body "Congratulations, you've reached the peak of your power! Surely untold adventures lie before you."
-    :reward "Maximum Power Unlocked!"}])
+    :reward "End-Game Content Unlocked!"}])
