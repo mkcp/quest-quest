@@ -61,7 +61,7 @@
 
     (let [world (orthogonal-tiled-map "world.tmx" (/ 1 u/pixels-per-tile))
 
-          player (e/create-player {:image (texture "player.png")
+          player (e/create-player {:image (texture "quester.png")
                                    :level 1
                                    :x 178
                                    :y 60})

@@ -6,10 +6,10 @@
 (defn create-player
   [{:keys [level image x y]}]
   (assoc image
-         :right (texture image :flip true false)
-         :left image
+         :right image
+         :left (texture image :flip true false)
          :width 1
-         :height (/ 32 18)
+         :height 1
          :x-velocity 0
          :y-velocity 0
          :level level
