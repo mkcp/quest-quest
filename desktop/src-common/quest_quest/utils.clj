@@ -8,7 +8,7 @@
 (def damping 0.5)
 (def max-velocity 10)
 (def max-jump-velocity 24)
-(def gravity -2.5)
+(def gravity -1.5)
 (def deceleration 0.9)
 
 (defn decelerate
