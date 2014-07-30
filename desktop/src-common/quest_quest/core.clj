@@ -50,41 +50,51 @@
 
 (defn- update-world
     [screen entities]
-    (->> entities
-         (e/move screen)
-         (e/prevent-move screen)
-         (e/animate screen)))
+    )
 
 (defscreen main-screen
   :on-show
   (fn [screen entities]
 
-    (let [world (orthogonal-tiled-map "world.tmx" (/ 1 u/pixels-per-tile))
+    ;; Create world
+    (->> (orthogonal-tiled-map "world.tmx" (/ 1 u/pixels-per-tile))
+         (update! screen :camera (orthographic) :renderer))
 
-          player (e/create-player {:image (texture "quester.png")
+    ;; Spawn entities
+    (let [player (e/create-player {:image (texture "quester.png")
                                    :level 1
                                    :x 178
                                    :y 60})
 
-          enemy (e/create-enemy {:image (texture "first-enemy.png")
+          enemy-one (e/create-enemy {:image (texture "first-enemy.png")
                                  :level 1
                                  :id :enemy-first
-                                 :x 150
-                                 :y 5})]
+                                 :x 148
+                                 :y 5})
 
-      (update! screen :camera (orthographic) :renderer world)
+          enemy-two (e/create-enemy {:image (texture "first-enemy.png")
+                                     :level 2
+                                     :id :enemy-second
+                                     :x 124
+                                     :y 5})
 
-      ;; FIXME Add all 3 enemies
-      [player]))
+          enemy-three (e/create-enemy {:image (texture "first-enemy.png")
+                                       :level 3
+                                       :id :enemy-three
+                                       :x 100
+                                       :y 5})]
+
+      [player enemy-one enemy-two enemy-three]))
 
   :on-render
   (fn [screen entities]
     (clear! (/ 135 255) (/ 206 255) (/ 235 255) 1)
 
     (->> entities
-         (map #(update-world screen %))
-
-         #_(e/move-player screen)
+         (map #(->> %
+                    (e/move-player screen)
+                    (e/prevent-move-player screen)
+                    (e/animate-player screen)))
 
          ;; FIXME Update the UI every render tick
          #_(run! ui-screen :on-update-ui :entities)

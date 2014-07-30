@@ -8,8 +8,8 @@
   (assoc image
          :right image
          :left (texture image :flip true false)
-         :width 1
-         :height 1
+         :width 2
+         :height 2
          :x-velocity 0
          :y-velocity 0
          :level level
@@ -24,17 +24,17 @@
 ;; FIXME This enemy has too much and too little.
 ;; FIXME It could be a problem with the functions here in general. Split player and enemy movement up.
 (defn create-enemy
-  [{:keys [image level x y id]}]
+  [{:keys [image level x y id ]}]
   (assoc image
          :x x
          :y y
+         :id id
+         :level level
          :x-velocity 0
          :y-velocity 0
-         :width 32
-         :height 32
-         :id :enemy-first ; FIXME
+         :width 1
+         :height level
          :direction :right
-         :level level
          :health (* 10 level)))
 
 (defn- update-player-position
@@ -60,7 +60,7 @@
 
 ; FIXME Understand how collision is based on touching and deactivating 
 ; FIXME Remove call to :to-destroy, surprised that destroying blocks is a part of prevent-move
-(defn prevent-move
+(defn prevent-move-player
   [screen {:keys [x y x-change y-change] :as entity}]
   (let [old-x (- x x-change)
         old-y (- y y-change)
@@ -74,7 +74,7 @@
              {:y-velocity 0 :y-change 0 :y old-y
               :can-jump? (not up?) :to-destroy (when up? tile)}))))
 
-(defn animate
+(defn animate-player
   [screen {:keys [x-velocity y-velocity
                   right left] :as entity}]
   (let [direction (u/get-direction entity)]
@@ -82,7 +82,7 @@
            (if (= direction :right) right left)
            {:direction direction})))
 
-(defn move
+(defn move-player
   "Calculates the change in x and y by multiplying velocity by time.
   If these are different, the entity is updated."
   [{:keys [delta-time]} {:keys [x y can-jump?] :as entity}]
@@ -101,11 +101,3 @@
              :y (+ y y-change)
              :can-jump? (if (> y-velocity 0) false can-jump?))
       entity)))
-
-(defn move-player
-  [screen entities]
-  (->> entities
-       (map #(-> %
-                 (update-player-position screen)
-                 (prevent-move screen)
-                 (animate screen)))))
