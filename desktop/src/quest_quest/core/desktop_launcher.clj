@@ -1,13 +1,18 @@
 (ns quest-quest.core.desktop-launcher
   (:require [quest-quest.core :refer :all])
-  (:import [com.badlogic.gdx.backends.lwjgl LwjglApplication]
+  (:import [com.badlogic.gdx.backends.lwjgl LwjglApplication LwjglApplicationConfiguration]
            [org.lwjgl.input Keyboard])
   (:gen-class))
 
 (defn -main
   []
-  (LwjglApplication. quest-quest "quest-quest" 1600 900)
-  (Keyboard/enableRepeatEvents true))
+  (let [config (LwjglApplicationConfiguration.)]
+    (set! (.title config ) "quest-quest")
+    (set! (.width config) 800)
+    (set! (.height config) 450)
+    (set! (.vSyncEnabled config) true)
+    (LwjglApplication. quest-quest config)
+    (Keyboard/enableRepeatEvents true)))
 
 
 ;; Repl helpers
