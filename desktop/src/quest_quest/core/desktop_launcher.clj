@@ -7,7 +7,7 @@
 (defn -main
   []
   (let [config (LwjglApplicationConfiguration.)]
-    (set! (.title config ) "quest-quest")
+    (set! (.title config) "quest-quest")
     (set! (.width config) 800)
     (set! (.height config) 450)
     (set! (.vSyncEnabled config) true)
