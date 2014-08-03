@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" width="200" height="75" tilewidth="32" tileheight="32">
+<map version="1.0" orientation="orthogonal" width="225" height="75" tilewidth="32" tileheight="32">
  <tileset firstgid="1" name="tile-set" tilewidth="32" tileheight="32">
   <image source="tileSet.png" trans="ff00ff" width="256" height="256"/>
  </tileset>
- <layer name="background" width="200" height="75">
+ <layer name="background" width="225" height="75">
   <data encoding="base64" compression="zlib">
-   eJzt2kEOgzAMBEBeg0T//8D2CiooTQm2YUZCXH1IsnaUaQIA4Onm6AJgx/L5XtFFAAAAAMCPstxrZakDgBzkAgBATd52AVxv3vz3mLUBkAVr5hfo5zyhlbUC19DXwBhyDAAgjl6MuzLDQzv7BWLpx6hEZnB3zmT4n6wgO2c9AIwnbwGAFr09w1m9hnssAACgl3mCKqxVAACAWN5RAdTlbo0qqvQbR3vKfgMYo0pGfFO5dgAAAAAAAAAAAAAAAAAAAAAA8nkDvxQI3Q==
+   eJzt2k0Kg0AMBlBPI7T3P2C7GywqMh3ID++BuM3C+GXCbBsAAPDUHl0ABHp9n3d0EQAAAAAACWTZl2apAwBWkm8AAHTnLioAs/af9xX7FQC6kGlHzpOQm38WmfgeoQ8zINQljwEAqMDcCvPsbSAXPQn9mV3hSPbB/2QL1CDzQGYBAM+ZGwAA1pqdr1bNZfajAAAAPTjfwaAfAAAAYHDvE4BodrYwVJnN7vpWTwNwp0rWnalcOwAAAAAAAAAAAAAAAAAAAAAAAABE+gCxLAjd
   </data>
  </layer>
- <layer name="walls" width="200" height="75">
+ <layer name="walls" width="225" height="75">
   <data encoding="base64" compression="zlib">
-   eJzt08FJBAAQBMFLy/wTEx+CiMv5kR68KpgMpt8ej8fbk8GretaGPnhl+oCbPuCmD7jpA276gJs+4KYPuOkDbvqAmz7gpg+46QNu+oCbPuCmD7jpA2764D/4zY//arCsbEMfLKvb0Aer6i70waq6CX2wqu5BH6yqW9AHq+oO9MGqugF9sKr+vz5YVX9fH6yqf68PVtWf1wer6r/rg1X11/XBqvrn+mBV/XF9sKr+tz5YVX9bH6yqf60PVtWf1ger6j/rg1X1l/XBqvrH+mBV/WF9sKr+rz5YVX9XH6yqf6sPVtWf1Qer6r/qg1X1V/XBqvqn+mBV/VF9sKr+Zz241N9cGPyk/uXK4Lv6k0uDr+o/rg0+1V9cHHyof7g6qD+4PF5b/T8zMzMzMzMzMzMzMzMzMzMzMzMzMzMzs1ffOx9+oeI=
+   eJzt09lNA1EABEGn5fwTQ3wgIQT42nW/o0rqDGaul8vleiPgPLf+54NwLh+Elg9Cyweh5YPQ8kFo+SC0fBBaPggtH4SWD0LLB6Hlg9DyQWj5ILR8EFo+CC0fZAX37HjmYGT1P3yQndXf8EF2Vv/CB9lZ/QkfZGf1H3yQndVf8EF2Vv/AB9lZ/YE6KNX7HyGo1NsfJSjUux8peLd686MF71TvfcTgXeqtjxq8Q73zkYOz1RsfPThTve8ZgrPU254lOEO965mCo9Wbni04Ur3nGYOj1FueNThCveOZg1fVG549eEW93xWCZ9XbXSV4Rr3blYJH1ZtdLXhEvdcVg3vVW101uEe905WDW+qNrh78p97nDsFf6m3uEvym3uVOwU/1JncLvqv3uGPwpd7irsGneoc7B/UGd4+91fuTJEmSJEmSJEmSJEmSJEmSJEmSJD3eBxiJ3zo=
   </data>
  </layer>
- <objectgroup name="checkpoints" width="200" height="75"/>
+ <objectgroup name="checkpoints" width="225" height="75"/>
 </map>
