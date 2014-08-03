@@ -1,6 +1,6 @@
-## Introduction
+## Quest Quest
 
-A play-clj game in which ... well, that part is up to you.
+Quest Quest is the easiest most mind-numbing RPG ever made. Enjoy!
 
 ## Contents
 
@@ -13,3 +13,7 @@ A play-clj game in which ... well, that part is up to you.
 ## Building
 
 All projects can be built using [Nightcode](https://nightcode.info/), or on the command line using [Leiningen](https://github.com/technomancy/leiningen) with the [lein-droid](https://github.com/clojure-android/lein-droid) and [lein-fruit](https://github.com/oakes/lein-fruit) plugins.
+
+
+## License
+Use what src you'd like, attribution not required. If you're not sure just message me; I probably won't mind.
