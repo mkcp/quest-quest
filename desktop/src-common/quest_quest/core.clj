@@ -12,10 +12,6 @@
 
 
 
-(defn reset-screen!
-  []
-  (on-gl (set-screen! quest-quest main-screen ui-screen)))
-
 
 (defn move-camera!
   "The camera tracks the player if above 8 or 0. It Centers the camera on the world when player is below 8."
@@ -37,10 +33,10 @@
       entities))
   entities)
 
+(defn reset-screen!
+  []
+  (on-gl (set-screen! quest-quest main-screen ui-screen)))
 
-(defn- update-world
-    [screen entities]
-    )
 
 (defscreen main-screen
   :on-show
