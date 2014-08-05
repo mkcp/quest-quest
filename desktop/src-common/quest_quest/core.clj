@@ -5,7 +5,8 @@
             [quest-quest.quests :refer :all]
             [play-clj.core :refer :all]
             [play-clj.ui :refer :all]
-            [play-clj.g2d :refer :all]))
+            [play-clj.g2d :refer :all]
+            [clojure.pprint :refer :all]))
 
 (declare quest-quest main-screen npc-health-screen ui-screen reset-screen!)
 
