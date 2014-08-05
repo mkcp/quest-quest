@@ -8,20 +8,9 @@
             [play-clj.g2d :refer :all]
             [clojure.pprint :refer :all]))
 
-(declare quest-quest main-screen npc-health-screen ui-screen reset-screen!)
+(declare quest-quest main-screen npc-health-screen ui-screen reset-screen! reload!)
 
-(defn reload!
-  "repl helper"
-  []
-  (use
-       'quest-quest.entities
-       'quest-quest.ui
-       'quest-quest.utils
-       'quest-quest.quests
-       'quest-quest.core
-       :reload)
 
-  (reset-screen!))
 
 (defn reset-screen!
   []
@@ -148,6 +137,19 @@
   :on-create
   (fn [this]
     (set-screen! this main-screen ui-screen)))
+
+;; Repl helpers
+(defn reload!
+  []
+  (use
+       'quest-quest.entities
+       'quest-quest.ui
+       'quest-quest.utils
+       'quest-quest.quests
+       'quest-quest.core
+       :reload)
+
+  (reset-screen!))
 
 ; Allows the repl to catch exceptions and clear the screen.
 (set-screen-wrapper! (fn [screen screen-fn]
