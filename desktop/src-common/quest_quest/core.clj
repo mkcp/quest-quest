@@ -45,26 +45,26 @@
     ;; Spawn entities
     (let [player (e/create-player {:image (texture "quester.png")
                                    :level 1
-                                   :x 178
-                                   :y 60})
+                                   :x 15
+                                   :y 80})
 
           enemy-one (e/create-enemy {:image (texture "first-enemy.png")
                                  :level 1
                                  :id :enemy-first
-                                 :x 148
-                                 :y 5})
+                                 :x 30
+                                 :y 80})
 
           enemy-two (e/create-enemy {:image (texture "first-enemy.png")
                                      :level 2
                                      :id :enemy-second
-                                     :x 124
-                                     :y 5})
+                                     :x 45
+                                     :y 80})
 
           enemy-three (e/create-enemy {:image (texture "first-enemy.png")
                                        :level 3
                                        :id :enemy-three
-                                       :x 100
-                                       :y 5})]
+                                       :x 60
+                                       :y 80})]
 
       [player enemy-one enemy-two enemy-three]))
 
