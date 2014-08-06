@@ -10,20 +10,12 @@
 
 (declare quest-quest main-screen npc-health-screen ui-screen reset-screen! reload!)
 
-(defn move-camera!
-  "The camera tracks the player if above 8 or 0. It Centers the camera on the world when player is below 8."
-  [screen x y]
-  (if (< y 8)
-    (if (> y 0)
-      (position! screen x 8))
-    (position! screen x y)))
-
 (defn update-screen!
   "Used in the render function to focus the camera on the player and reset the screen if the player goes out of bounds."
   [screen entities]
   (doseq [{:keys [x y height id to-destroy]} entities]
     (case id
-      :player (do (move-camera! screen x y)
+      :player (do (u/move-camera! screen x y)
                   (when (u/out-of-bounds? y height)
                     (reset-screen!)))
       entities))
@@ -32,7 +24,6 @@
 (defn reset-screen!
   []
   (on-gl (set-screen! quest-quest main-screen ui-screen)))
-
 
 (defscreen main-screen
   :on-show

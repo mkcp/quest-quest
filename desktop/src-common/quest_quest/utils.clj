@@ -1,9 +1,9 @@
 (ns quest-quest.utils
   (:require [play-clj.core :refer :all]))
 
-(def vertical-tiles 16)
+(def vertical-tiles 12)
 (def pixels-per-tile 32)
-(def camera-height 8)
+(def camera-height 6)
 (def duration 0.15)
 (def damping 0.5)
 (def max-velocity 10)
@@ -17,6 +17,14 @@
     (if (< (Math/abs velocity) damping)
       0
       velocity)))
+
+(defn move-camera!
+  "The camera tracks the player if above 8 or 0. It Centers the camera on the world when player is below 8."
+  [screen x y]
+  (if (< y camera-height)
+    (if (> y 0)
+      (position! screen x camera-height))
+    (position! screen x y)))
 
 (defn ^:private touched?
   [key]
