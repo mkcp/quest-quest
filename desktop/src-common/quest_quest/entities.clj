@@ -44,7 +44,6 @@
         x-change (* x-velocity delta-time)
         y-change (* y-velocity delta-time)]
 
-    ;; FIXME Break apart arrangement (control flow) and work here.
     (if (or (not= 0 x-change)
             (not= 0 y-change))
       (assoc entity
@@ -58,8 +57,6 @@
       entity)))
 
 
-; FIXME Understand how collision is based on touching and deactivating 
-; FIXME Remove call to :to-destroy, surprised that destroying blocks is a part of prevent-move
 (defn prevent-move-player
   [screen {:keys [x y x-change y-change] :as entity}]
   (let [old-x (- x x-change)
@@ -72,7 +69,7 @@
              {:x-velocity 0 :x-change 0 :x old-x})
            (when-let [tile (u/get-touching-tile screen entity-y "walls")]
              {:y-velocity 0 :y-change 0 :y old-y
-              :can-jump? (not up?) :to-destroy (when up? tile)}))))
+              :can-jump? (not up?)}))))
 
 (defn animate-player
   [screen {:keys [x-velocity y-velocity
