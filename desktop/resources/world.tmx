@@ -13,7 +13,7 @@
  </layer>
  <layer name="walls" width="225" height="75">
   <data encoding="base64" compression="zlib">
-   eJzt01FOI0EUBEFfi5tzvBUfSIiFXRtmnN3zIqS8QdXr7XZ7vTPgePf+zwfhHD4ILR+Elg9Cyweh5YPQ8kFo+SC0fBBaPggtH4SWD0LLB6Hlg9DyQWj5ILR8EFo+yBU8suOdgxXVv/BBJqs/4YNMVv/BB5ms/oIPMln9Ax9ksvoDdVCq979CUKm3v0pQqHe/UvBs9eZXC56p3vuKwbPUW181eIZ65ysHZ6s3vnpwpnrfOwRnqbe9S3CGetc7BUerN71bcKR6zzsGR6m3vGtwhHrHOwe/VW949+A36v1eIfipertXCX6i3u2VgkfVm71a8Ih6r1cM7lVv9arBPeqdXjn4n3qjVw/+pd7nhOA79TanBF+pdzkp+Kze5LTgo3qPE4N39RanBm/qHU4O6g1Oj9nq/YnJ6u3JByerdycfnKzenHxwsnpv8sHJ6q3JByerdyYfnKzemHxwsnpf8sHJ6m3JByerdyUfnKzelHxwsnpP8sHJ6i3JByerdyQfnKzekP7uRZKkwf0BxhETfQ==
+   eJzt08Ft2wAQRUG15fbiDpwOkiZcXuSDgUBJHMkm+UjuDPAue/77erlcXu8MWN69/+cHYR1+EFp+EFp+EFp+EFp+EFp+EFp+EFp+EFp+EFp+EFp+EFp+EFp+EFp+ELbz7drzzc0PwnZern2/uflB2M6Paz9vbn6QM3hkx0cO9qj+Cz/IZPVP+EEmq//BDzJZ/Qt+kMnqP/CDTFb/QB2U6v3vIajU299LUKh3v6dga/Xm9xZsqd77HoOt1Fvfa7CFeud7DtZWb3zvwZrqfR8hWEu97aMEa6h3faRgafWmjxYsqd7zEYOl1Fs+arCEesdHDr6q3vDRg6+o93uG4LPq7Z4l+Ix6t2cKHlVv9mzBI+q9njG4V73Vswb3qHd65uB/6o2ePfhIvc8Jwb/U25wS/E29y0nBrXqT04Lf1XucGLyrtzg1eFPvcHJQb3B6zFbvT0xWb09+cLJ6d/KDk9Wbkx+crN6b/OBk9dbkByerdyY/OFm9MfnByep9yQ9OVm9LfnCyelfyg5PVm5IfnKzek/zgZPWW5Acnq3ckPzhZvSH92ZMkSYP7BW11Fuw=
   </data>
  </layer>
  <objectgroup name="checkpoints" width="225" height="75">
