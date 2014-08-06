@@ -3,6 +3,9 @@
  <tileset firstgid="1" name="tile-set" tilewidth="32" tileheight="32">
   <image source="tileSet.png" trans="ff00ff" width="256" height="256"/>
  </tileset>
+ <tileset firstgid="65" name="tile-map" tilewidth="32" tileheight="32">
+  <image source="tile-map.png" trans="ff00ff" width="512" height="352"/>
+ </tileset>
  <layer name="background" width="225" height="75">
   <data encoding="base64" compression="zlib">
    eJzt2rlqw0AUBVBlK7IV2SDOAlkNyf9/oG8nHFnGKBKaEefAZZpXTKHRexrUNAAAwKHWc28AZvST/M69CQAAAACAApRyX1rKPgBgTPobAABL519UAIZa/1n7uF8BYCn0tG2+J6Fs3lmUxPMIy2EGhHrpxwAA1MDcCsO5t4GyOJOwfGZX2Kb3wf/pLVAHPQ/0LADgcOYGAIBxDZ2vxprL3I8CAAAsg+87aDkPAAAA0PLfJwBzc2cLrVpms33n1pkGYJ9aet0uNe8dAAAAAAAAAAAAAAAAAJjPUXKcnCSnydmENUDXeXKRXCZXyfWENUDXTXKb3CX3ycOENUDXKnlKnpOX5HWCmseeFWia9+Qj+Uy+ku8Jat56VgCAEm0A5bEPFg==
@@ -10,7 +13,10 @@
  </layer>
  <layer name="walls" width="225" height="75">
   <data encoding="base64" compression="zlib">
-   eJzt09ttW0EUBEGmpfwTM/xhQDD8IKV72bt7qoDOYObj8Xh8PBlwvWf/54NwDx+Elg9Cyweh5YPQ8kFo+SC0fBBaPggtH4SWD0LLB6Hlg9DyQWj5ILR8EFo+CC0f5ASv7HjnYEX1L3yQyepP+CCT1X/wQSarv+CDTFb/wAeZrP5AHZTq/a8QVOrtrxIU6t2vFLxbvfnVgneq975i8C711lcN3qHe+crB3eqNrx7cqd73DsFd6m3vEtyh3vVOwdXqTe8WXKne847BVeot7xpcod7xzsF31RvePfiOer8nBF9Vb/eU4Cvq3Z4UvKre7GnBK+q9nhg8q97qqcEz6p2eHPxPvdHTg3+p9zkh+Jt6m1OCP6l3OSn4Xb3JacFn9R4nBr/UW5wa/FTvcHJQb3B6zFbvT0xWb08+OFm9O/ngZPXm5IOT1XuTD05Wb00+OFm9M/ngZPXG5IOT1fuSD05Wb0s+OFm9K/ngZPWm5IOT1XuSD05Wb0k+OFm9I/ngZPWGJEmSPvcDoFWhcA==
+   eJzt01FOI0EUBEFfi5tzvBUfSIiFXRtmnN3zIqS8QdXr7XZ7vTPgePf+zwfhHD4ILR+Elg9Cyweh5YPQ8kFo+SC0fBBaPggtH4SWD0LLB6Hlg9DyQWj5ILR8EFo+yBU8suOdgxXVv/BBJqs/4YNMVv/BB5ms/oIPMln9Ax9ksvoDdVCq979CUKm3v0pQqHe/UvBs9eZXC56p3vuKwbPUW181eIZ65ysHZ6s3vnpwpnrfOwRnqbe9S3CGetc7BUerN71bcKR6zzsGR6m3vGtwhHrHOwe/VW949+A36v1eIfipertXCX6i3u2VgkfVm71a8Ih6r1cM7lVv9arBPeqdXjn4n3qjVw/+pd7nhOA79TanBF+pdzkp+Kze5LTgo3qPE4N39RanBm/qHU4O6g1Oj9nq/YnJ6u3JByerdycfnKzenHxwsnpv8sHJ6q3JByerdyYfnKzemHxwsnpf8sHJ6m3JByerdyUfnKzelHxwsnpP8sHJ6i3JByerdyQfnKzekP7uRZKkwf0BxhETfQ==
   </data>
  </layer>
+ <objectgroup name="checkpoints" width="225" height="75">
+  <object name="level1" type="level-up" x="352" y="2272" width="32" height="64"/>
+ </objectgroup>
 </map>
