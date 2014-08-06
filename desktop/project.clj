@@ -1,4 +1,4 @@
-(defproject quest-quest "0.0.12"
+(defproject quest-quest "0.1.0"
   :description "Quest Quest, the easist RPG ever made."
 
   :dependencies [[com.badlogicgames.gdx/gdx "1.2.0"]
