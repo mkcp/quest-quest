@@ -2,7 +2,7 @@
   (:require [play-clj.core :refer :all]))
 
 (def vertical-tiles 16)
-(def pixels-per-tile 16)
+(def pixels-per-tile 32)
 (def camera-height 8)
 (def duration 0.15)
 (def damping 0.5)
