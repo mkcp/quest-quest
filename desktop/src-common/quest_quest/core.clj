@@ -33,31 +33,12 @@
     (->> (orthogonal-tiled-map "world.tmx" (/ 1 u/pixels-per-tile))
          (update! screen :camera (orthographic) :renderer))
 
-    ;; Spawn entities
-    (let [player (e/create-player {:image (texture "quester.png")
-                                   :level 1
-                                   :x 15
-                                   :y 80})
-
-          enemy-one (e/create-enemy {:image (texture "first-enemy.png")
-                                 :level 1
-                                 :id :enemy-first
-                                 :x 45
-                                 :y 10})
-
-          enemy-two (e/create-enemy {:image (texture "first-enemy.png")
-                                     :level 2
-                                     :id :enemy-second
-                                     :x 60
-                                     :y 10})
-
-          enemy-three (e/create-enemy {:image (texture "first-enemy.png")
-                                       :level 3
-                                       :id :enemy-three
-                                       :x 75
-                                       :y 10})]
-
-      [player enemy-one enemy-two enemy-three]))
+    ;; Create a vector of entities
+    [(e/create-player {:image (texture "quester.png") :level 1 :x 18 :y 80})
+     (e/create-enemy {:image (texture "first-enemy.png") :level 1 :id :enemy-first :x 45 :y 10})
+     (e/create-enemy {:image (texture "first-enemy.png") :level 2 :id :enemy-second :x 60 :y 10})
+     (e/create-enemy {:image (texture "first-enemy.png") :level 3 :id :enemy-three :x 75 :y 10})
+     (e/create-enemy {:image (texture "first-enemy.png") :level 10 :id :boss :x 200 :y 80})])
 
   :on-render
   (fn [screen entities]
