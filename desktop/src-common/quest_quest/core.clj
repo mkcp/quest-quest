@@ -30,7 +30,7 @@
   (fn [screen entities]
 
     ;; Create world
-    (->> (orthogonal-tiled-map "big-world.tmx" (/ 1 u/pixels-per-tile))
+    (->> (orthogonal-tiled-map "world.tmx" (/ 1 u/pixels-per-tile))
          (update! screen :camera (orthographic) :renderer))
 
     ;; Spawn entities
