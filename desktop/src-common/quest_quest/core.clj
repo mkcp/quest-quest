@@ -34,7 +34,7 @@
          (update! screen :camera (orthographic) :renderer))
 
     ;; Create a vector of entities
-    [(e/create-player {:image (texture "quester.png") :level 1 :x 18 :y 80})
+    [(e/create-player {:image (texture "quester.png") :level 1 :x 20 :y 69})
      (e/create-enemy {:image (texture "first-enemy.png") :level 1 :id :enemy-first :x 45 :y 10})
      (e/create-enemy {:image (texture "first-enemy.png") :level 2 :id :enemy-second :x 60 :y 10})
      (e/create-enemy {:image (texture "first-enemy.png") :level 3 :id :enemy-three :x 75 :y 10})
@@ -112,7 +112,6 @@
        'quest-quest.quests
        'quest-quest.core
        :reload)
-
   (reset-screen!))
 
 ; Allows the repl to catch exceptions and clear the screen.
