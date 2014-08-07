@@ -15,9 +15,10 @@
   [screen entities]
   (doseq [{:keys [x y height id to-destroy]} entities]
     (case id
-      :player (do (u/move-camera! screen x y)
-                  (when (u/out-of-bounds? y height)
-                    (reset-screen!)))
+      :player (do
+                (u/move-camera! screen x y)
+                (when (u/out-of-bounds? y height)
+                  (reset-screen!)))
       entities))
   entities)
 
