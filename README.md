@@ -1,8 +1,10 @@
-## Quest Quest
+# Quest Quest
+Quest Quest the easiest most mind-numbing RPG ever made.
 
-Quest Quest is the easiest most mind-numbing RPG ever made. Enjoy!
+## About
+In Quest Quest your quest is to quest quests. Many perilous challenges await in this unique and deeply personal adventure.
 
-## Contents
+### Contents
 
 * `android/src` Android-specific code
 * `desktop/resources` Images, audio, and other files
@@ -10,10 +12,11 @@ Quest Quest is the easiest most mind-numbing RPG ever made. Enjoy!
 * `desktop/src-common` Cross-platform game code
 * `ios/src` iOS-specific code
 
-## Building
+### Building
 
 All projects can be built using [Nightcode](https://nightcode.info/), or on the command line using [Leiningen](https://github.com/technomancy/leiningen) with the [lein-droid](https://github.com/clojure-android/lein-droid) and [lein-fruit](https://github.com/oakes/lein-fruit) plugins.
 
 
 ## License
-Use what src you'd like, attribution not required. If you're not sure just message me; I probably won't mind.
+Copyright Mike Patella. Most Rights Unobserved, lol
+Any usage in good faith is welcome. If you're not sure just message me; I probably won't mind.
