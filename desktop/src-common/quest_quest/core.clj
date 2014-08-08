@@ -2,13 +2,13 @@
   (:require [quest-quest.entities :as e]
             [quest-quest.utils :as u]
             [quest-quest.ui :as ui]
-            [quest-quest.quests :as quests]
+            [quest-quest.quests :refer :all]
             [play-clj.core :refer :all]
             [play-clj.ui :refer :all]
             [play-clj.g2d :refer :all]
             [clojure.pprint :refer :all]))
 
-(declare quest-quest main-screen npc-health-screen ui-screen reset-screen! reload!)
+(declare quest-quest main-screen npc-health-screen ui-screen reset-screen!)
 
 (defn update-screen!
   "Used in the render function to focus the camera on the player and reset the screen if the player goes out of bounds."
@@ -23,6 +23,7 @@
   entities)
 
 (defn reset-screen!
+  "Starts main-screen from scratch"
   []
   (on-gl (set-screen! quest-quest main-screen ui-screen)))
 
@@ -45,13 +46,11 @@
   (fn [screen entities]
     (clear! (/ 135 255) (/ 206 255) (/ 235 255) 1)
 
+    #_(run! ui-screen :on-update-ui :entities entities)
+
     ;; thread all of the entities through the game logic.
     (->> entities
          (process screen)
-
-         ;; Update the ui by passing it all of the current entities
-         #_(run! ui-screen :on-update-ui :entities ,,,)
-
          (render! screen)
          (update-screen! screen)))
 
@@ -79,14 +78,12 @@
 
   :on-resize
   (fn [{:keys [width height] :as screen} entities]
-    ; FIXME Width automatically flexes to maintain ratio
-    (height! screen (:height screen)))
+    (height! screen (:height screen))
+    nil)
 
   :on-update-ui
-  (fn [screen entities]
-    ; FIXME Update UI with player HP and level every render
-    ; FIXME Update quest using player level to set current quest
-  ))
+  (fn [screen entities])
+  )
 
 (defscreen blank-screen
   :on-render
@@ -100,6 +97,7 @@
 
 ;; Repl helpers
 (defn reload!
+  "Repl helper which reloads all namespaces and resets the game, useful for changing code."
   []
   (use
        'quest-quest.entities
@@ -109,6 +107,8 @@
        'quest-quest.core
        :reload)
   (reset-screen!))
+
+(defn print-dimensions [screen] (println (:height screen) (:width screen)))
 
 ; Allows the repl to catch exceptions and clear the screen.
 (set-screen-wrapper! (fn [screen screen-fn]
