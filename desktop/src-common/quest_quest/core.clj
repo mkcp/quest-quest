@@ -26,6 +26,11 @@
   []
   (on-gl (set-screen! quest-quest main-screen ui-screen)))
 
+(defn process
+  "Applies the updates to each entity"
+  [screen entities]
+  (map #(e/update screen %) entities))
+
 (defscreen main-screen
   :on-show
   (fn [screen entities]
@@ -34,25 +39,18 @@
     (->> (orthogonal-tiled-map "world.tmx" (/ 1 u/pixels-per-tile))
          (update! screen :camera (orthographic) :renderer))
 
-    ;; Create a vector of entities
-    [(e/create-player {:image (texture "quester.png") :level 1 :x 20 :y 69})
-     (e/create-enemy {:image (texture "first-enemy.png") :level 1 :id :enemy-first :x 45 :y 10})
-     (e/create-enemy {:image (texture "first-enemy.png") :level 2 :id :enemy-second :x 60 :y 10})
-     (e/create-enemy {:image (texture "first-enemy.png") :level 3 :id :enemy-three :x 75 :y 10})
-     (e/create-enemy {:image (texture "first-enemy.png") :level 10 :id :boss :x 200 :y 80})])
+    (e/spawn-all))
 
   :on-render
   (fn [screen entities]
     (clear! (/ 135 255) (/ 206 255) (/ 235 255) 1)
 
+    ;; thread all of the entities through the game logic.
     (->> entities
-         (map #(->> %
-                    (e/move-player screen)
-                    (e/prevent-move-player screen)
-                    (e/animate-player screen)))
+         (process screen)
 
-         ;; FIXME Update the UI every render tick
-         #_(run! ui-screen :on-update-ui :entities)
+         ;; Update the ui by passing it all of the current entities
+         #_(run! ui-screen :on-update-ui :entities ,,,)
 
          (render! screen)
          (update-screen! screen)))
@@ -62,17 +60,14 @@
     (height! screen u/vertical-tiles)
     nil))
 
-(defn- make-ui-elements
-  []
-  (let [quest (first quests)]
-    [(ui/make-quest-table quest) (ui/make-unit-frames) (ui/make-fps)]))
-
-
 (defscreen ui-screen
   :on-show
   (fn [screen entities]
     (update! screen :camera (orthographic) :renderer (stage))
-    (make-ui-elements))
+
+    ;; FIXME Quest tracker is preloaded with default quests
+    (let [quest (first quests)]
+      [(ui/make-quest-table quest) (ui/make-unit-frames) (ui/make-fps)]))
 
   :on-render
   (fn [screen entities]

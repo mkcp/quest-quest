@@ -3,6 +3,25 @@
             [play-clj.core :refer :all]
             [play-clj.g2d :refer :all]))
 
+(declare update move prevent-move animat,)
+
+(defn update
+  "Applies the game logic to an entity"
+  [screen entity]
+  (->> entity
+       (move screen)
+       (prevent-move screen)
+       (animate screen)))
+
+(defn spawn-all
+  "returns a vector containing all of the starting entities"
+  []
+  [(create-player {:image (texture "quester.png") :level 1 :x 20 :y 69})
+   (create-enemy {:image (texture "first-enemy.png") :level 1 :id :enemy-first :x 45 :y 10})
+   (create-enemy {:image (texture "first-enemy.png") :level 2 :id :enemy-second :x 60 :y 10})
+   (create-enemy {:image (texture "first-enemy.png") :level 3 :id :enemy-three :x 75 :y 10})
+   (create-enemy {:image (texture "first-enemy.png") :level 10 :id :boss :x 200 :y 80})])
+
 (defn create-player
   [{:keys [level image x y]}]
   (assoc image
@@ -21,8 +40,6 @@
          :can-jump? false
          :direction :left))
 
-;; FIXME This enemy has too much and too little.
-;; FIXME It could be a problem with the functions here in general. Split player and enemy movement up.
 (defn create-enemy
   [{:keys [image level x y id ]}]
   (assoc image
@@ -37,7 +54,7 @@
          :direction :right
          :health (* 10 level)))
 
-(defn- update-player-position
+(defn- update-position
   [{:keys [delta-time]} {:keys [x y can-jump?] :as entity}]
   (let [x-velocity (u/get-x-velocity entity)
         y-velocity (+ (u/get-y-velocity entity) u/gravity)
@@ -56,30 +73,7 @@
              :can-jump? (if (> y-velocity 0) false can-jump?))
       entity)))
 
-
-(defn prevent-move-player
-  [screen {:keys [x y x-change y-change] :as entity}]
-  (let [old-x (- x x-change)
-        old-y (- y y-change)
-        entity-x (assoc entity :y old-y)
-        entity-y (assoc entity :x old-x)
-        up? (> y-change 0)]
-    (merge entity
-           (when (u/get-touching-tile screen entity-x "walls")
-             {:x-velocity 0 :x-change 0 :x old-x})
-           (when-let [tile (u/get-touching-tile screen entity-y "walls")]
-             {:y-velocity 0 :y-change 0 :y old-y
-              :can-jump? (not up?)}))))
-
-(defn animate-player
-  [screen {:keys [x-velocity y-velocity
-                  right left] :as entity}]
-  (let [direction (u/get-direction entity)]
-    (merge entity
-           (if (= direction :right) right left)
-           {:direction direction})))
-
-(defn move-player
+(defn move
   "Calculates the change in x and y by multiplying velocity by time.
   If these are different, the entity is updated."
   [{:keys [delta-time]} {:keys [x y can-jump?] :as entity}]
@@ -98,3 +92,27 @@
              :y (+ y y-change)
              :can-jump? (if (> y-velocity 0) false can-jump?))
       entity)))
+
+(defn prevent-move
+  [screen {:keys [x y x-change y-change] :as entity}]
+  (let [old-x (- x x-change)
+        old-y (- y y-change)
+        entity-x (assoc entity :y old-y)
+        entity-y (assoc entity :x old-x)
+        up? (> y-change 0)]
+    (merge entity
+           (when (u/get-touching-tile screen entity-x "walls")
+             {:x-velocity 0 :x-change 0 :x old-x})
+           (when-let [tile (u/get-touching-tile screen entity-y "walls")]
+             {:y-velocity 0 :y-change 0 :y old-y
+              :can-jump? (not up?)}))))
+
+(defn animate
+  [screen {:keys [x-velocity y-velocity
+                  right left] :as entity}]
+  (let [direction (u/get-direction entity)]
+    (merge entity
+           (if (= direction :right) right left)
+           {:direction direction})))
+
+
