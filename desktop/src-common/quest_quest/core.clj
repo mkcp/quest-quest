@@ -2,7 +2,7 @@
   (:require [quest-quest.entities :as e]
             [quest-quest.utils :as u]
             [quest-quest.ui :as ui]
-            [quest-quest.quests :refer :all]
+            [quest-quest.quests :as quests]
             [play-clj.core :refer :all]
             [play-clj.ui :refer :all]
             [play-clj.g2d :refer :all]

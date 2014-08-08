@@ -3,25 +3,6 @@
             [play-clj.core :refer :all]
             [play-clj.g2d :refer :all]))
 
-(declare update move prevent-move animat,)
-
-(defn update
-  "Applies the game logic to an entity"
-  [screen entity]
-  (->> entity
-       (move screen)
-       (prevent-move screen)
-       (animate screen)))
-
-(defn spawn-all
-  "returns a vector containing all of the starting entities"
-  []
-  [(create-player {:image (texture "quester.png") :level 1 :x 20 :y 69})
-   (create-enemy {:image (texture "first-enemy.png") :level 1 :id :enemy-first :x 45 :y 10})
-   (create-enemy {:image (texture "first-enemy.png") :level 2 :id :enemy-second :x 60 :y 10})
-   (create-enemy {:image (texture "first-enemy.png") :level 3 :id :enemy-three :x 75 :y 10})
-   (create-enemy {:image (texture "first-enemy.png") :level 10 :id :boss :x 200 :y 80})])
-
 (defn create-player
   [{:keys [level image x y]}]
   (assoc image
@@ -53,25 +34,6 @@
          :height level
          :direction :right
          :health (* 10 level)))
-
-(defn- update-position
-  [{:keys [delta-time]} {:keys [x y can-jump?] :as entity}]
-  (let [x-velocity (u/get-x-velocity entity)
-        y-velocity (+ (u/get-y-velocity entity) u/gravity)
-        x-change (* x-velocity delta-time)
-        y-change (* y-velocity delta-time)]
-
-    (if (or (not= 0 x-change)
-            (not= 0 y-change))
-      (assoc entity
-             :x-velocity (u/decelerate x-velocity)
-             :y-velocity (u/decelerate y-velocity)
-             :x-change x-change
-             :y-change y-change
-             :x (+ x x-change)
-             :y (+ y y-change)
-             :can-jump? (if (> y-velocity 0) false can-jump?))
-      entity)))
 
 (defn move
   "Calculates the change in x and y by multiplying velocity by time.
@@ -115,4 +77,19 @@
            (if (= direction :right) right left)
            {:direction direction})))
 
+(defn update
+  "Applies the game logic to an entity"
+  [screen entity]
+  (->> entity
+       (move screen)
+       (prevent-move screen)
+       (animate screen)))
 
+(defn spawn-all
+  "returns a vector containing all of the starting entities"
+  []
+  [(create-player {:image (texture "quester.png") :level 1 :x 20 :y 69})
+   (create-enemy {:image (texture "first-enemy.png") :level 1 :id :enemy-first :x 45 :y 10})
+   (create-enemy {:image (texture "first-enemy.png") :level 2 :id :enemy-second :x 60 :y 10})
+   (create-enemy {:image (texture "first-enemy.png") :level 3 :id :enemy-three :x 75 :y 10})
+   (create-enemy {:image (texture "first-enemy.png") :level 10 :id :boss :x 200 :y 80})])
