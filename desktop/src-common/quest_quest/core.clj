@@ -13,7 +13,7 @@
 (defn update-screen!
   "Used in the render function to focus the camera on the player and reset the screen if the player goes out of bounds."
   [screen entities]
-  (doseq [{:keys [x y height id to-destroy]} entities]
+  (doseq [{:keys [x y height id]} entities]
     (case id
       :player (do
                 (u/move-camera! screen x y)
@@ -26,11 +26,6 @@
   "Starts main-screen from scratch"
   []
   (on-gl (set-screen! quest-quest main-screen ui-screen)))
-
-(defn process
-  "Applies the updates to each entity"
-  [screen entities]
-  (map #(e/update screen %) entities))
 
 (defscreen main-screen
   :on-show
@@ -50,7 +45,7 @@
 
     ;; thread all of the entities through the game logic.
     (->> entities
-         (process screen)
+         (map #(e/update screen %))
          (render! screen)
          (update-screen! screen)))
 
@@ -64,7 +59,6 @@
   (fn [screen entities]
     (update! screen :camera (orthographic) :renderer (stage))
 
-    ;; FIXME Quest tracker is preloaded with default quests
     (let [quest (first quests)]
       [(ui/make-quest-table quest) (ui/make-unit-frames) (ui/make-fps)]))
 
