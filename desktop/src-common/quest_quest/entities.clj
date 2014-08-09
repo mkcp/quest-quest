@@ -3,6 +3,16 @@
             [play-clj.core :refer :all]
             [play-clj.g2d :refer :all]))
 
+(declare move prevent-move animate attack damage)
+
+(defn update
+  "Applies the game logic to an entity"
+  [screen entity]
+  (->> entity
+       (move screen)
+       (prevent-move screen)
+       (animate screen)))
+
 (defn create-player
   [{:keys [level image x y]}]
   (assoc image
@@ -66,8 +76,7 @@
            (when (u/get-touching-tile screen entity-x "walls")
              {:x-velocity 0 :x-change 0 :x old-x})
            (when-let [tile (u/get-touching-tile screen entity-y "walls")]
-             {:y-velocity 0 :y-change 0 :y old-y
-              :can-jump? (not up?)}))))
+             {:y-velocity 0 :y-change 0 :y old-y :can-jump? (not up?)}))))
 
 (defn animate
   [screen {:keys [x-velocity y-velocity
@@ -77,13 +86,24 @@
            (if (= direction :right) right left)
            {:direction direction})))
 
-(defn update
-  "Applies the game logic to an entity"
-  [screen entity]
-  (->> entity
-       (move screen)
-       (prevent-move screen)
-       (animate screen)))
+(defn player-touching-enemy?
+  [{:keys [x y] :as player} {:keys [x y] :as enemy}]
+  )
+
+(defn attack
+  [screen {:keys [id] :as entity}]
+  (if (and (= id :player) (player-touching-enemy?))
+    nil
+    nil))
+
+(defn resolve-damage
+  "If entity is marked as being attacked, apply the damage to its health"
+  [screen {:keys [damaged? health] :as entity}]
+  (if (damaged? entity)
+    (do (sound "damage.wave" :play)
+        (assoc entity
+               :health (- 1 health)))
+    entity))
 
 (defn spawn-all
   "returns a vector containing all of the starting entities"
