@@ -11,7 +11,8 @@
 (declare quest-quest main-screen npc-health-screen ui-screen reset-screen!)
 
 (defn update-screen!
-  "Used in the render function to focus the camera on the player and reset the screen if the player goes out of bounds."
+  "Used in the render function to focus the camera on the player and reset
+  the screen if the player goes out of bounds."
   [screen entities]
   (doseq [{:keys [x y height id]} entities]
     (case id
@@ -22,27 +23,20 @@
       entities))
   entities)
 
-(defn reset-screen!
-  "Starts main-screen from scratch"
-  []
-  (on-gl (set-screen! quest-quest main-screen ui-screen)))
+(defn reset-screen!  [] (on-gl (set-screen! quest-quest main-screen ui-screen)))
 
 (defscreen main-screen
   :on-show
   (fn [screen entities]
-
     ;; Create world
     (->> (orthogonal-tiled-map "world.tmx" (/ 1 u/pixels-per-tile))
          (update! screen :camera (orthographic) :renderer))
-
     (e/spawn-all))
 
   :on-render
   (fn [screen entities]
-    (clear! (/ 135 255) (/ 206 255) (/ 235 255) 1)
-
+    (clear! (/ 135 255) (/ 206 255) (/ 235 255) )
     #_(run! ui-screen :on-update-ui :entities entities)
-
     ;; thread all of the entities through the game logic.
     (->> entities
          (map #(e/update screen %))
@@ -58,7 +52,6 @@
   :on-show
   (fn [screen entities]
     (update! screen :camera (orthographic) :renderer (stage))
-
     (let [quest (first quests)]
       [(ui/make-quest-table quest) (ui/make-unit-frames) (ui/make-fps)]))
 
@@ -76,8 +69,7 @@
     nil)
 
   :on-update-ui
-  (fn [screen entities])
-  )
+  (fn [screen entities]))
 
 (defscreen blank-screen
   :on-render
