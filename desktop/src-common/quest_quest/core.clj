@@ -28,16 +28,15 @@
 (defscreen main-screen
   :on-show
   (fn [screen entities]
-    ;; Create world
-    (->> (orthogonal-tiled-map "world.tmx" (/ 1 u/pixels-per-tile))
-         (update! screen :camera (orthographic) :renderer))
+    (update! screen
+             :camera (orthographic)
+             :renderer (orthogonal-tiled-map "world.tmx" (/ 1 u/pixels-per-tile)))
     (e/spawn-all))
 
   :on-render
   (fn [screen entities]
-    (clear! (/ 135 255) (/ 206 255) (/ 235 255) )
+    (clear! (/ 135 255) (/ 206 255) (/ 235 255) 100)
     #_(run! ui-screen :on-update-ui :entities entities)
-    ;; thread all of the entities through the game logic.
     (->> entities
          (map #(e/update screen %))
          (render! screen)
@@ -57,11 +56,11 @@
 
   :on-render
   (fn [screen entities]
-    (->> (for [entity entities]
-           (case (:id entity)
-             :fps (doto entity (label! :set-text (str (game :fps))))
-             entity))
-         (render! screen)))
+    (render! screen
+             (for [entity entities]
+               (case (:id entity)
+                 :fps (doto entity (label! :set-text (str (game :fps))))
+                 entity))))
 
   :on-resize
   (fn [{:keys [width height] :as screen} entities]
