@@ -13,41 +13,56 @@
        (prevent-move screen)
        (animate screen)))
 
+#_(defn create
+  [image id level x y scale]
+  (assoc image
+         :id id
+         :level level
+         :x x
+         :y y
+         :x-velocity 0
+         :y-velocity 0
+         :height scale
+         :width scale
+         :health (* 10 level)))
+
+#_(defn create-player [& args] (create args))
+#_(defn create-enemy)
+
 (defn create-player
   [{:keys [level image x y]}]
   (assoc image
-         :right image
-         :left (texture image :flip true false)
+         :id :player
+         :x x
+         :y y
          :width 2
          :height 2
          :x-velocity 0
          :y-velocity 0
          :level level
-         :x x
-         :y y
          :health (* 10 level)
-         :mana (* 10 level)
-         :id :player
+         :wounds 0
          :can-jump? false
-         :direction :left))
+         :direction :left
+         :right image
+         :left (texture image :flip true false)))
 
 (defn create-enemy
-  [{:keys [image level x y id ]}]
+  [{:keys [image level x y id]}]
   (assoc image
+         :id id
          :x x
          :y y
-         :id id
          :level level
          :x-velocity 0
          :y-velocity 0
          :width 1
          :height level
          :direction :right
-         :health (* 10 level)))
+         :health (* 10 level)
+         :wounds 0))
 
 (defn move
-  "Calculates the change in x and y by multiplying velocity by time.
-  If these are different, the entity is updated."
   [{:keys [delta-time]} {:keys [x y can-jump?] :as entity}]
   (let [x-velocity (u/get-x-velocity entity)
         y-velocity (+ (u/get-y-velocity entity) u/gravity)
@@ -86,9 +101,17 @@
            (if (= direction :right) right left)
            {:direction direction})))
 
-(defn player-touching-enemy?
-  [{:keys [x y] :as player} {:keys [x y] :as enemy}]
-  )
+(defn near-entity?
+  [{:keys [x y id] :as e} e2 min-distance]
+  (and (not= id (:id e2))
+       (nil? (:draw-time e2))
+       (> (:health e2) 0)
+       (< (Math/abs ^double (- x (:x e2))) min-distance)
+       (< (Math/abs ^double (- y (:y e2))) min-distance)))
+
+(defn near-entities?
+  [entities entity min-distance]
+  (some #(near-entity? entity % min-distance) entities))
 
 (defn attack
   [screen {:keys [id] :as entity}]
