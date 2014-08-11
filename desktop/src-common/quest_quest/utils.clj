@@ -18,11 +18,12 @@
       0
       velocity)))
 
+;; FIXME Try locking the camera at boss height.
 (defn move-camera!
   "The camera tracks the player if above 8 or 0. It Centers the camera on the world when player is below 8."
   [screen x y]
   (if (< y camera-height)
-    (if (> y 0)
+    (if (pos? y)
       (position! screen x camera-height))
     (position! screen x y)))
 
@@ -61,8 +62,8 @@
 (defn get-direction
   [{:keys [x-velocity direction]}]
   (cond
-    (> x-velocity 0) :right
-    (< x-velocity 0) :left
+    (pos? x-velocity) :right
+    (neg? x-velocity) :left
     :else
     direction))
 
