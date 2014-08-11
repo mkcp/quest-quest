@@ -23,20 +23,20 @@
       entities))
   entities)
 
-(defn reset-screen!  [] (on-gl (set-screen! quest-quest main-screen ui-screen)))
+(defn reset-screen! []
+  (on-gl (set-screen! quest-quest main-screen ui-screen)))
 
 (defscreen main-screen
   :on-show
   (fn [screen entities]
-    (update! screen
-             :camera (orthographic)
-             :renderer (orthogonal-tiled-map "world.tmx" (/ 1 u/pixels-per-tile)))
+    (update! screen :camera (orthographic))
+    (update! screen :renderer (orthogonal-tiled-map "world.tmx" (/ 1 u/pixels-per-tile)))
     (e/spawn-all))
 
   :on-render
   (fn [screen entities]
     (clear! (/ 135 255) (/ 206 255) (/ 235 255) 100)
-    #_(run! ui-screen :on-update-ui :entities entities)
+    #_(run! ui-screen :on -update-ui :entities entities)
     (->> entities
          (map #(e/update screen %))
          (render! screen)
