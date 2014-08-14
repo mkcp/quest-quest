@@ -17,6 +17,7 @@
   </data>
  </layer>
  <objectgroup name="checkpoints" width="250" height="75">
-  <object name="level1" type="level-up" x="352" y="2272" width="32" height="64"/>
+  <object name="1" type="level-up-checkpoint" x="736" y="2272" width="32" height="64"/>
+  <object name="2" type="level-up-checkpoint" x="320" y="2272" width="32" height="64"/>
  </objectgroup>
 </map>
