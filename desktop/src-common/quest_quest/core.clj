@@ -26,6 +26,11 @@
 (defn reset-screen! []
   (on-gl (set-screen! quest-quest main-screen ui-screen)))
 
+(defn update-ui
+  [main-screen ui-screen game-entities ui-entities]
+  ;; FIXME update UI and active here.
+  )
+
 (defscreen main-screen
   :on-show
   (fn [screen entities]
@@ -36,7 +41,14 @@
   :on-render
   (fn [screen entities]
     (clear! (/ 135 255) (/ 206 255) (/ 235 255) 100)
-    #_(run! ui-screen :on -update-ui :entities entities)
+
+    #_(run! ui-screen :on-update-ui :entities entities)
+
+    #_(->> entities
+        (map #(select-keys % [:x :y]))
+        first
+        println)
+
     (->> entities
          (map #(e/update screen %))
          (render! screen)
@@ -51,6 +63,7 @@
   :on-show
   (fn [screen entities]
     (update! screen :camera (orthographic) :renderer (stage))
+
     (let [quest (first quests)]
       [(ui/make-quest-table quest) (ui/make-unit-frames) (ui/make-fps)]))
 
@@ -68,7 +81,8 @@
     nil)
 
   :on-update-ui
-  (fn [screen entities]))
+  (fn [screen entities]
+    (update-ui screen entities)))
 
 (defscreen blank-screen
   :on-render
@@ -85,9 +99,9 @@
   "Repl helper which reloads all namespaces and resets the game, useful for changing code."
   []
   (use
+       'quest-quest.utils
        'quest-quest.entities
        'quest-quest.ui
-       'quest-quest.utils
        'quest-quest.quests
        'quest-quest.core
        :reload)
