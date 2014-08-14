@@ -13,22 +13,6 @@
        (prevent-move screen)
        (animate screen)))
 
-#_(defn create
-  [image id level x y scale]
-  (assoc image
-         :id id
-         :level level
-         :x x
-         :y y
-         :x-velocity 0
-         :y-velocity 0
-         :height scale
-         :width scale
-         :health (* 10 level)))
-
-#_(defn create-player [& args] (create args))
-#_(defn create-enemy)
-
 (defn create-player
   [{:keys [level image x y]}]
   (assoc image
@@ -62,6 +46,12 @@
          :health (* 10 level)
          :wounds 0))
 
+(defn ^:private enable-jump?
+  [y-velocity can-jump?]
+  (if (pos? y-velocity)
+    false
+    can-jump?))
+
 (defn move
   [{:keys [delta-time]} {:keys [x y can-jump?] :as entity}]
   (let [x-velocity (u/get-x-velocity entity)
@@ -77,7 +67,7 @@
              :y-change y-change
              :x (+ x x-change)
              :y (+ y y-change)
-             :can-jump? (if (> y-velocity 0) false can-jump?))
+             :can-jump? (enable-jump? y-velocity can-jump?))
       entity)))
 
 (defn prevent-move
@@ -87,6 +77,8 @@
         entity-x (assoc entity :y old-y)
         entity-y (assoc entity :x old-x)
         up? (> y-change 0)]
+    ;; FIXME
+    (u/get-touching-checkpoint screen entity "checkpoints")
     (merge entity
            (when (u/get-touching-tile screen entity-x "walls")
              {:x-velocity 0 :x-change 0 :x old-x})
@@ -100,33 +92,6 @@
     (merge entity
            (if (= direction :right) right left)
            {:direction direction})))
-
-(defn near-entity?
-  [{:keys [x y id] :as e} e2 min-distance]
-  (and (not= id (:id e2))
-       (nil? (:draw-time e2))
-       (> (:health e2) 0)
-       (< (Math/abs ^double (- x (:x e2))) min-distance)
-       (< (Math/abs ^double (- y (:y e2))) min-distance)))
-
-(defn near-entities?
-  [entities entity min-distance]
-  (some #(near-entity? entity % min-distance) entities))
-
-(defn attack
-  [screen {:keys [id] :as entity}]
-  (if (and (= id :player) (player-touching-enemy?))
-    nil
-    nil))
-
-(defn resolve-damage
-  "If entity is marked as being attacked, apply the damage to its health"
-  [screen {:keys [damaged? health] :as entity}]
-  (if (damaged? entity)
-    (do (sound "damage.wave" :play)
-        (assoc entity
-               :health (- 1 health)))
-    entity))
 
 (defn spawn-all
   "returns a vector containing all of the starting entities"
