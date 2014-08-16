@@ -93,24 +93,31 @@
   (apply hash-map (interleave (map keyword (.getKeys properties))
                               (.getValues properties))))
 
-(defn reify-checkpoints
-  [objects]
-  (map (fn [object]
-         (let [checkpoint (bean object)
-               properties (properties->map (:properties checkpoint))
-               new-checkpoint (assoc checkpoint
-                                     :x (/ (:x properties) pixels-per-tile)
-                                     :y (/ (:y properties) pixels-per-tile))]
-           (assoc new-checkpoint
-                  :properties properties)))
-       objects))
+(defn- load-checkpoints
+  [screen]
+  (->> (map-objects (tiled-map-layer screen "checkpoints"))
+       (map (fn [object]
+              (let [checkpoint (bean object)
+                    properties (properties->map (:properties checkpoint))
+                    new-checkpoint (assoc checkpoint
+                                          :x (/ (:x properties) pixels-per-tile)
+                                          :y (/ (:y properties) pixels-per-tile))]
+                (assoc new-checkpoint
+                       :properties properties))))))
 
-;; FIXME
+(def checkpoints (load-checkpoints))
+
+(defn- touching-checkpoint?
+  "Could use rectangle intersection here?"
+  [checkpoint entity]
+  (or (>= (:x checkpoint) (:x entity))
+      (> (:y checkpoint) (:y entity))
+      (> (:height checkpoint) (:height entity))
+      (> (:width checkpoint) (:width entity))))
+
 (defn get-touching-checkpoint
-  [screen {:keys [x y width height]} layer-name]
-  (->> (map-objects (tiled-map-layer screen layer-name))
-       reify-checkpoints 
-      ))
+  [screen entity]
+  (filter (touching-checkpoint? checkpoints entity) checkpoints))
 
 (defn near-entity?
   [{:keys [x y id] :as e} e2 min-distance]
