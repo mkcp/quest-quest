@@ -57,9 +57,9 @@
   :on-show
   (fn [screen entities]
     (update! screen :camera (orthographic) :renderer (stage))
-
-    (let [quest (first quests)]
-      [(ui/make-quest-table quest) (ui/make-unit-frames) (ui/make-fps)]))
+    (vector (ui/make-quest-table (first quests))
+            (ui/make-unit-frames)
+            (ui/make-fps)))
 
   :on-render
   (fn [screen entities]
