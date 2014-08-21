@@ -88,36 +88,36 @@
          (drop-while nil?)
          first)))
 
-(defn properties->map
+(defn properties->hash-map
   [properties]
   (apply hash-map (interleave (map keyword (.getKeys properties))
                               (.getValues properties))))
 
-(defn- load-checkpoints
-  [screen]
-  (->> (map-objects (tiled-map-layer screen "checkpoints"))
-       (map (fn [object]
-              (let [checkpoint (bean object)
-                    properties (properties->map (:properties checkpoint))
-                    new-checkpoint (assoc checkpoint
-                                          :x (/ (:x properties) pixels-per-tile)
-                                          :y (/ (:y properties) pixels-per-tile))]
-                (assoc new-checkpoint
-                       :properties properties))))))
+(defn downscale-x-and-y
+  [properties]
+  (assoc properties
+         :x (/ (:x properties) pixels-per-tile)
+         :y (/ (:y properties) pixels-per-tile)))
 
-(def checkpoints (load-checkpoints))
+(defn make-checkpoint
+  [map-object]
+  (merge (bean map-object) (-> (properties->hash-map (:properties checkpoint))
+                               downscale-x-and-y)))
 
+;; FIXME
 (defn- touching-checkpoint?
-  "Could use rectangle intersection here?"
-  [checkpoint entity]
+  [entity checkpoint]
   (or (>= (:x checkpoint) (:x entity))
-      (> (:y checkpoint) (:y entity))
-      (> (:height checkpoint) (:height entity))
-      (> (:width checkpoint) (:width entity))))
+      (>= (:y checkpoint) (:y entity))
+      (>= (:height checkpoint) (:height entity))
+      (>= (:width checkpoint) (:width entity))))
 
 (defn get-touching-checkpoint
+  "Loads the checkpoints layer from the tile map on the main-screen."
   [screen entity]
-  (filter (touching-checkpoint? checkpoints entity) checkpoints))
+  (let [objects (map-objects (tiled-map-layer screen "checkpoints"))
+        checkpoints (map make-checkpoint objects)]
+    (filter #(touching-checkpoint? entity %) checkpoints)))
 
 (defn near-entity?
   [{:keys [x y id] :as e} e2 min-distance]
