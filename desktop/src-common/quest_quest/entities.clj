@@ -6,7 +6,7 @@
 (declare move prevent-move animate attack damage)
 
 (defn update
-  "Applies the game logic to an entity"
+  "Called once in the main game thread"
   [screen entity]
   (->> entity
        (move screen)
@@ -77,8 +77,6 @@
         entity-x (assoc entity :y old-y)
         entity-y (assoc entity :x old-x)
         up? (> y-change 0)]
-    ;; FIXME
-    (u/get-touching-checkpoint screen entity "checkpoints")
     (merge entity
            (when (u/get-touching-tile screen entity-x "walls")
              {:x-velocity 0 :x-change 0 :x old-x})
