@@ -76,7 +76,7 @@
 
   :on-update-ui
   (fn [screen entities]
-    (update-ui screen entities)))
+    #_(update-ui screen entities)))
 
 (defscreen blank-screen
   :on-render
