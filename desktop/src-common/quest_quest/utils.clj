@@ -101,8 +101,9 @@
 
 (defn make-checkpoint
   [map-object]
-  (merge (bean map-object) (-> (properties->hash-map (:properties checkpoint))
-                               downscale-x-and-y)))
+  (let [checkpoint (bean map-object)]
+    (merge checkpoint (-> (properties->hash-map (:properties checkpoint))
+                          downscale-x-and-y))))
 
 ;; FIXME
 (defn- touching-checkpoint?
