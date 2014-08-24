@@ -4,22 +4,8 @@
             [play-clj.ui :refer :all]
             [play-clj.g2d :refer :all]))
 
-(defn make-quest-table
-  [{:keys [title body]}]
-  (table [:row [(assoc (label (str "Active Quest: " title)
-                              (color :white))
-                       :id :quest-title)]
-
-          :row [(assoc (label body
-                              (color :white))
-                       :id :quest-body)]]
-
-         :set-position 1450 850))
-
-
-;; FIXME Starting information is hardcoded. Need to pull from somewhere 
-;; if I don't want to start at level 1 every time.
 (defn make-unit-frames
+  "Initialzes the unit frames, starting information is hardcoded."
   []
   (table [:row [(assoc (label (str "HP: " 10)
                               (color :white))
@@ -30,7 +16,20 @@
           :row [(assoc (label (str "LVL: " 1)
                               (color :white))
                        :id :level)]]
-         :set-position 50 850) )
+         :set-position 40 355))
+
+(defn make-quest-table
+  [{:keys [title body]}]
+  (let [title-label (assoc (label title
+                                  (color :white)
+                                  :set-scale 1.2 1.2)
+                           :id :quest-title)
+        body-label (assoc (label body
+                                 (color :white))
+                          :id :quest-body)]
+    (table [:row [title-label]
+            :row [body-label]]
+           :set-position 400 366)))
 
 (defn make-fps
   []
