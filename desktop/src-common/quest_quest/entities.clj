@@ -3,12 +3,13 @@
             [play-clj.core :refer :all]
             [play-clj.g2d :refer :all]))
 
-(declare move prevent-move animate attack damage)
+(declare move prevent-move animate attack damage level-up)
 
 (defn update
   "Called once in the main game thread"
   [screen entity]
   (->> entity
+       (level-up screen)
        (move screen)
        (prevent-move screen)
        (animate screen)))
@@ -45,6 +46,13 @@
          :direction :right
          :health (* 10 level)
          :wounds 0))
+
+(defn level-up
+  [screen {:keys [player? level] :as entity}]
+  (if player?
+    (assoc entity
+           :level (inc level))
+    entity))
 
 (defn ^:private enable-jump?
   [y-velocity can-jump?]
