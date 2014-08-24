@@ -14,7 +14,7 @@
                  [org.clojure/clojure "1.6.0"]
                  [org.clojure/tools.trace "0.7.5"]
                  [org.clojure/java.data "0.1.1"]
-                 [play-clj "0.3.8"]]
+                 [play-clj "0.3.9"]]
 
   :source-paths ["src" "src-common"]
   :javac-options ["-target" "1.6" "-source" "1.6" "-Xlint:-options"]
