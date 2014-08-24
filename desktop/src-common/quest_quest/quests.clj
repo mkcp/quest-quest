@@ -1,8 +1,8 @@
 (ns quest-quest.quests)
 
 (def quests
-  [{:title "Quest Quest"
-    :body "Welcome to Quest Quest!"
+  [{:title "Welcome to Quest Quest!"
+    :body ""
     :reward "Falling Unlocked!"}
 
    {:title "Safety First"
