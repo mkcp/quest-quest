@@ -3,17 +3,6 @@
             [play-clj.core :refer :all]
             [play-clj.g2d :refer :all]))
 
-(declare move prevent-move animate attack damage level-up)
-
-(defn update
-  "Called once in the main game thread"
-  [screen entity]
-  (->> entity
-       (level-up screen)
-       (move screen)
-       (prevent-move screen)
-       (animate screen)))
-
 (defn create-player
   [{:keys [level image x y]}]
   (assoc image
@@ -107,3 +96,12 @@
    (create-enemy {:image (texture "first-enemy.png") :level 2 :id :enemy-second :x 60 :y 10})
    (create-enemy {:image (texture "first-enemy.png") :level 3 :id :enemy-three :x 75 :y 10})
    (create-enemy {:image (texture "first-enemy.png") :level 10 :id :boss :x 200 :y 80})])
+
+(defn update
+  "Called once in the main game thread"
+  [screen entity]
+  (->> entity
+       (level-up screen)
+       (move screen)
+       (prevent-move screen)
+       (animate screen)))
