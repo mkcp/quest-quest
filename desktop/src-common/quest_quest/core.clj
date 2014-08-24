@@ -26,10 +26,6 @@
 (defn reset-screen! []
   (on-gl (set-screen! quest-quest main-screen ui-screen)))
 
-(defn update
-  [screen entities]
-  (e/update screen entities))
-
 (defscreen main-screen
   :on-show
   (fn [screen entities]
@@ -41,10 +37,11 @@
   (fn [screen entities]
     (clear! (/ 135 255) (/ 206 255) (/ 235 255) 100)
 
+    ;; FIXME Update ui every screen tick.
+    #_(run! ui-screen :on-update-ui :entities entities)
+
     (->> entities
-         ;; FIXME Update ui every screen tick.
-         #_(run! ui-screen :on-update-ui :entities)
-         (map #(update screen %))
+         (map #(e/update screen %))
          (render! screen)
          (update-screen! screen)))
 
@@ -76,7 +73,7 @@
 
   :on-update-ui
   (fn [screen entities]
-    #_(update-ui screen entities)))
+    #_(ui/update-all-elements screen entities)))
 
 (defscreen blank-screen
   :on-render

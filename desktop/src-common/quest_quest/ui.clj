@@ -37,3 +37,8 @@
   (assoc (label "0" (color :white))
          :id :fps
          :x 5))
+
+#_(defn update-all-elements
+    [screen entities]
+    (refresh-unit-frames)
+    (refresh-quest))
