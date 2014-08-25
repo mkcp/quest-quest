@@ -4,7 +4,7 @@
            [org.lwjgl.input Keyboard])
   (:gen-class))
 
-(def settings {:name 400 :width 800 :height 400})
+(def settings {:name "Quest Quest" :width 800 :height 400})
 
 (defn -main []
   (let [config (LwjglApplicationConfiguration.)]
