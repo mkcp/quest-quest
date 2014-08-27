@@ -26,6 +26,13 @@
 (defn reset-screen! []
   (on-gl (set-screen! quest-quest main-screen ui-screen)))
 
+(defn play-sounds!
+  [entities]
+  (doseq [{:keys [play-sound]} entities]
+    (when play-sound
+      (sound! play-sound :play)))
+  (map #(dissoc % :play-sound) entities))
+
 (defscreen main-screen
   :on-show
   (fn [screen entities]
@@ -36,12 +43,16 @@
   :on-render
   (fn [screen entities]
     (clear! (/ 135 255) (/ 206 255) (/ 235 255) 100)
-
-    ;; FIXME Update ui every screen tick.
     #_(run! ui-screen :on-update-ui :entities entities)
 
     (->> entities
-         (map #(e/update screen %))
+         (map (fn [entity]
+                (->> entity
+                     #_(level-up screen)
+                     (e/move screen)
+                     (e/prevent-move screen)
+                     (e/animate screen))))
+         play-sounds!
          (render! screen)
          (update-screen! screen)))
 

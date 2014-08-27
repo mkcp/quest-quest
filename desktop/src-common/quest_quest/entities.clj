@@ -19,7 +19,8 @@
          :can-jump? false
          :direction :left
          :right image
-         :left (texture image :flip true false)))
+         :left (texture image :flip true false)
+         :jump-sound (sound "jump.wav")))
 
 (defn create-enemy
   [{:keys [image level x y id]}]
@@ -91,17 +92,8 @@
 (defn spawn-all
   "returns a vector containing all of the starting entities"
   []
-  [(create-player {:image (texture "quester.png") :level 1 :x 20 :y 69})
-   (create-enemy {:image (texture "first-enemy.png") :level 1 :id :enemy-first :x 45 :y 10})
-   (create-enemy {:image (texture "first-enemy.png") :level 2 :id :enemy-second :x 60 :y 10})
-   (create-enemy {:image (texture "first-enemy.png") :level 3 :id :enemy-three :x 75 :y 10})
-   (create-enemy {:image (texture "first-enemy.png") :level 10 :id :boss :x 200 :y 80})])
-
-(defn update
-  "Called once in the main game thread"
-  [screen entity]
-  (->> entity
-       (level-up screen)
-       (move screen)
-       (prevent-move screen)
-       (animate screen)))
+  (vector (create-player {:image (texture "quester.png") :level 1 :x 20 :y 69})
+          (create-enemy {:image (texture "first-enemy.png") :level 1 :id :enemy-first :x 45 :y 10})
+          (create-enemy {:image (texture "first-enemy.png") :level 2 :id :enemy-second :x 60 :y 10})
+          (create-enemy {:image (texture "first-enemy.png") :level 3 :id :enemy-three :x 75 :y 10})
+          (create-enemy {:image (texture "first-enemy.png") :level 10 :id :boss :x 200 :y 80})))
