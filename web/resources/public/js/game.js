@@ -8,14 +8,20 @@ var gameIsPaused = false;
 
 var GameState = function(game) {};
 
-// Preload assets that can be loaded.
 GameState.prototype.preload = function() {
+
+  // World
+  this.game.load.tilemap('world', 'assets/world.json', null, Phaser.Tilemap.TILED_JSON);
+  this.game.load.image('tileSet', 'assets/tileSet.png');
+  this.game.load.image('tileMap', 'assets/tile-map.png');
+
+  // Entities
   this.game.load.image('player', 'assets/sprites/quester.png');
   this.game.load.image('enemy', 'assets/sprites/first-enemy.png');
-  this.game.load.tilemap('world', 'assets/world.json', null, Phaser.Tilemap.TILED_JSON);
 };
 
 GameState.prototype.create = function() {
+
   // Register inputs from keyboard
   this.game.input.keyboard.addKeyCapture([
     Phaser.Keyboard.LEFT,
@@ -36,23 +42,35 @@ GameState.prototype.create = function() {
   this.game.stage.backgroundColor = '#7ec0ee';
 
   // Splice together tiles and background sprite sheets
-  this.map = this.game.add.tilemap('world');
+  this.world = this.game.add.tilemap('world');
+  this.world.addTilesetImage('tile-set', 'tileSet');
+  this.world.addTilesetImage('tile-map', 'tileMap');
 
+  this.walls = this.world.createLayer('walls');
+  this.walls.resizeWorld();
+
+  // Create player ingame
   this.player = this.game.add.sprite(this.game.width / 2,
                                      this.game.height - this.game.height / 1.33,
                                      'player');
-  this.game.physics.enable(this.player,
-                           Phaser.Physics.ARCADE);
 
+  // Define physics rules for player
+  this.game.physics.enable(this.player, Phaser.Physics.ARCADE);
   this.player.body.collideWorldBounds = true;
   this.player.body.maxVelocity.setTo(MAX_SPEED, MAX_SPEED * 10); // (x, y)
   this.player.body.drag.setTo(DRAG, 0); // (x, y)
 
+  // Set world gravity
   this.game.physics.arcade.gravity.y = GRAVITY;
 
   // Create FPS counter
   this.game.time.advancedTiming = true;
-  this.fpsText = this.game.add.text(20, 20, '', {font: '16px Arial', fill: '#ffffff'});
+
+  var fpsTextStyle = {
+    font: '16px Arial',
+    fill: '#ffffff'
+  };
+  this.fpsText = this.game.add.text(20, 20, '', fpsTextStyle);
 };
 
 GameState.prototype.update = function() {
