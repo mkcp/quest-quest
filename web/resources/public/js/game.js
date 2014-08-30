@@ -45,10 +45,10 @@ var quests = [{
 }];
 
 // Physics constants
-var MAX_SPEED = 500;     // Pixels / second
+var MAX_SPEED = 400;     // Pixels / second
 var JUMP_SPEED = -250;   // Pixels / second (negative y is u p )
-var ACCELERATION = 1200; // Pixels / second / second
-var DRAG = 2400;         // Pixels / second / second
+var ACCELERATION = 2000; // Pixels / second / second
+var DRAG = 2000;         // Pixels / second / second
 var GRAVITY = 1200;      // Pixels / second
 
 var gameIsPaused = false;
