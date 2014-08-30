@@ -4,10 +4,10 @@ var quests = [{
   reward: "Falling Unlocked!"
 }, {
   title: "Safety First",
-  body, "The ground is fast approaching, you must land safely!",
-  reward, "Move Right Unlocked!"
+  body: "The ground is fast approaching, you must land safely!",
+  reward: "Move Right Unlocked!"
 }, {
-  title; "Right of Way",
+  title: "Right of Way",
   body: "Get a feel for your surroundings, press d or right arrow to move right as far as your legs will carry you!",
   reward: "Move Left Unlocked!"
 }, {
