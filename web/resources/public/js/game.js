@@ -1,8 +1,9 @@
+// Physics constants
 var MAX_SPEED = 500;     // Pixels / second
 var JUMP_SPEED = -250;   // Pixels / second (negative y is u p )
 var ACCELERATION = 1200; // Pixels / second / second
 var DRAG = 2400;         // Pixels / second / second
-var GRAVITY = 2400;      // Pixels / second
+var GRAVITY = 1200;      // Pixels / second
 
 var gameIsPaused = false;
 
@@ -31,6 +32,9 @@ GameState.prototype.create = function() {
   ]);
   this.input = new Input();
 
+  // Start physics
+  this.game.physics.startSystem(Phaser.Physics.ARCADE);
+
   // FIXME Implement gradient background
   // var bgBackground = this.game.add.bitmapData(100, 100);
   // bgBackground.beginLinearGradientFill(["#000", "#FFF"], [0, 1], 0, 20, 0, 120);
@@ -41,27 +45,44 @@ GameState.prototype.create = function() {
   // Set background
   this.game.stage.backgroundColor = '#7ec0ee';
 
-  // Splice together tiles and background sprite sheets
-  this.world = this.game.add.tilemap('world');
-  this.world.addTilesetImage('tile-set', 'tileSet');
-  this.world.addTilesetImage('tile-map', 'tileMap');
+  // Add world and then tile sheets to world
+  this.map = this.game.add.tilemap('world');
+  this.map.addTilesetImage('tile-set', 'tileSet');
+  this.map.addTilesetImage('tile-map', 'tileMap');
 
-  this.walls = this.world.createLayer('walls');
-  this.walls.resizeWorld();
+  var background = this.map.createLayer('background');
+  background.resizeWorld();
+  // Add layers to world, then resize both to match world.
+  var walls = this.map.createLayer('walls');
+  walls.resizeWorld();
+  this.walls = walls;
 
   // Create player ingame
-  this.player = this.game.add.sprite(this.game.width / 2,
-                                     this.game.height - this.game.height / 1.33,
-                                     'player');
+  var spawn = {
+    x: this.game.width / 2,
+    y: this.game.height - (this.game.height / 1.33),
+  };
 
-  // Define physics rules for player
-  this.game.physics.enable(this.player, Phaser.Physics.ARCADE);
+  this.player = this.game.add.sprite(spawn.x, spawn.y, 'player');
+  this.player.scale.x = 2;
+  this.player.scale.y = 2;
+
+  this.game.physics.enable(this.player);
+  this.game.physics.enable(walls);
+
+  this.game.physics.arcade.collide(this.player, walls);
+
+  // Define player collisions
   this.player.body.collideWorldBounds = true;
+
   this.player.body.maxVelocity.setTo(MAX_SPEED, MAX_SPEED * 10); // (x, y)
   this.player.body.drag.setTo(DRAG, 0); // (x, y)
 
   // Set world gravity
   this.game.physics.arcade.gravity.y = GRAVITY;
+
+  // Camera behavior
+  this.game.camera.follow(this.player);
 
   // Create FPS counter
   this.game.time.advancedTiming = true;
@@ -74,6 +95,7 @@ GameState.prototype.create = function() {
 };
 
 GameState.prototype.update = function() {
+  this.game.physics.arcade.collide(this.player, this.walls);
   if (!gameIsPaused) {
 
     // Handle input
@@ -96,8 +118,8 @@ GameState.prototype.update = function() {
   }
 };
 
-var game = new Phaser.Game(800, 600, Phaser.AUTO, 'game');
-game.state.add('game', GameState, true); // What does true do here?
+var game = new Phaser.Game(800, 600, Phaser.AUTO, 'quest-quest');
+game.state.add('quest-quest', GameState, true);
 
 function Input() {
 
