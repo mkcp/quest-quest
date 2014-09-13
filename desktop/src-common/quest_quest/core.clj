@@ -43,7 +43,7 @@
   :on-render
   (fn [screen entities]
     (clear! (/ 135 255) (/ 206 255) (/ 235 255) 100)
-    #_(run! ui-screen :on-update-ui :entities entities)
+    #_(screen! ui-screen :on-update-ui :entities entities)
 
     (->> entities
          (map (fn [entity]
