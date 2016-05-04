@@ -18,5 +18,6 @@ All projects can be built using [Nightcode](https://nightcode.info/), or on the 
 
 
 ## License
-Copyright Mike Patella. Most Rights Unobserved, lol
+Copyright Mikaela Patella. Most Rights Unobserved, lol
+
 Any usage in good faith is welcome. If you're not sure just message me; I probably won't mind.
